@@ -16,10 +16,12 @@
 
 
 -- Dumping database structure for order_doan
+DROP DATABASE IF EXISTS `order_doan`;
 CREATE DATABASE IF NOT EXISTS `order_doan` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `order_doan`;
 
 -- Dumping structure for table order_doan.categories
+DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
@@ -34,6 +36,7 @@ INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
 	(2, 'Đồ uống', '2025-05-29 10:25:14', '2025-05-29 10:41:31');
 
 -- Dumping structure for table order_doan.logs
+DROP TABLE IF EXISTS `logs`;
 CREATE TABLE IF NOT EXISTS `logs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned NOT NULL,
@@ -42,9 +45,12 @@ CREATE TABLE IF NOT EXISTS `logs` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table order_doan.logs: ~0 rows (approximately)
 
 -- Dumping structure for table order_doan.order
+DROP TABLE IF EXISTS `order`;
 CREATE TABLE IF NOT EXISTS `order` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `code` varchar(50) NOT NULL,
@@ -54,9 +60,12 @@ CREATE TABLE IF NOT EXISTS `order` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table order_doan.order: ~14 rows (approximately)
 
 -- Dumping structure for table order_doan.pending_payment
+DROP TABLE IF EXISTS `pending_payment`;
 CREATE TABLE IF NOT EXISTS `pending_payment` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `paymentMethod` varchar(50) DEFAULT NULL,
@@ -69,10 +78,12 @@ CREATE TABLE IF NOT EXISTS `pending_payment` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Dumping data for table order_doan.pending_payment: ~16 rows (approximately)
 
 -- Dumping structure for table order_doan.personal_access_tokens
+DROP TABLE IF EXISTS `personal_access_tokens`;
 CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -92,6 +103,7 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
 -- Dumping data for table order_doan.personal_access_tokens: ~0 rows (approximately)
 
 -- Dumping structure for table order_doan.products
+DROP TABLE IF EXISTS `products`;
 CREATE TABLE IF NOT EXISTS `products` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) unsigned NOT NULL,
@@ -118,6 +130,7 @@ INSERT INTO `products` (`id`, `category_id`, `name`, `image`, `price`, `sale`, `
 	(9, 2, 'Trà hibiscus', 'drink-4.jpg', 17000, NULL, '2025-05-27 01:27:23', '2025-05-29 10:42:11', 0);
 
 -- Dumping structure for table order_doan.sessions
+DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE IF NOT EXISTS `sessions` (
   `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint(20) unsigned DEFAULT NULL,
@@ -133,7 +146,10 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   KEY `sessions_last_activity_index` (`last_activity`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Dumping data for table order_doan.sessions: ~0 rows (approximately)
+
 -- Dumping structure for table order_doan.setting
+DROP TABLE IF EXISTS `setting`;
 CREATE TABLE IF NOT EXISTS `setting` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
@@ -159,6 +175,7 @@ INSERT INTO `setting` (`id`, `name`, `value`, `created_at`, `updated_at`) VALUES
 	(12, 'Mô tả', 'Chào mừng', '2025-05-30 04:11:10', '2025-06-06 06:16:56');
 
 -- Dumping structure for table order_doan.table
+DROP TABLE IF EXISTS `table`;
 CREATE TABLE IF NOT EXISTS `table` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ban` varchar(50) NOT NULL,
@@ -175,6 +192,7 @@ INSERT INTO `table` (`id`, `ban`, `vitriban`, `created_at`, `updated_at`) VALUES
 	(3, 'AB123', 'Trong nhà tầng 2', '2025-05-31 08:09:29', '2025-05-31 08:09:29');
 
 -- Dumping structure for table order_doan.users
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `level` int(11) DEFAULT 1,
@@ -202,6 +220,7 @@ INSERT INTO `users` (`id`, `level`, `google_id`, `facebook_id`, `email`, `phone`
 	(3, 3, NULL, NULL, '456@456', '456', 'Nguyễn Văn C', '$2y$12$Ei.LmAW1oTdFFI7t3I6Rb.nMnNx4m2ijU4e/czDWLq5jAiZ8EQAsu', 'goidoan_avatar_1749402599.png', '3777', 'qXAacWzUxcXW9AajtW8BwxkbiKsrTmSykZVNJs5GDq9SfHsOh4EJOHvrsfmY', '2025-02-10 10:44:40', 1, '2025-06-14 10:15:28', '2025-03-05 08:13:30', '2025-06-14 10:15:28');
 
 -- Dumping structure for table order_doan.users_level
+DROP TABLE IF EXISTS `users_level`;
 CREATE TABLE IF NOT EXISTS `users_level` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
