@@ -27,6 +27,29 @@
 <%--                        });--%>
 <%--                    </script>--%>
 <%--                    @endforeach--%>
+    <%--                    <c:forEach var="$category" items="${$category}">--%>
+    <%--                        <div class="col-md-3">--%>
+    <%--                            <div class="menu-entry">--%>
+    <%--                                <a class="img"--%>
+    <%--                                   style="width: 255px; height: 255px; object-fit: cover;--%>
+    <%--                                           background-image: url(<c:url value='/template/products/${product.image}'/>);">--%>
+    <%--                                </a>--%>
+    <%--                                <div class="text text-center pt-4">--%>
+    <%--                                    <h3><a href="javascript:void(0)">${product.name}</a></h3>--%>
+    <%--                                    <p class="price">--%>
+    <%--                                    <span>--%>
+    <%--                                        <fmt:formatNumber value="${product.price}" type="number" groupingUsed="true"/> VNĐ--%>
+    <%--                                    </span>--%>
+    <%--                                    </p>--%>
+    <%--                                    <p>--%>
+    <%--                                        <a href="javascript:void(0)"--%>
+    <%--                                           id="chon_product_${product.id}"--%>
+    <%--                                           class="btn btn-primary btn-outline-primary">Thêm vào giỏ hàng</a>--%>
+    <%--                                    </p>--%>
+    <%--                                </div>--%>
+    <%--                            </div>--%>
+    <%--                        </div>--%>
+    <%--                    </c:forEach>--%>
                 </div>
             </div>
             <div class="col-md-12 ftco-animate d-flex justify-content-center mb-5">
@@ -55,7 +78,7 @@
                     <div class="menu-entry">
                         <a class="img"
                            style="width: 255px; height: 255px; object-fit: cover;
-                                   background-image: url('public/products/${product.image}');">
+                                   background-image: url(<c:url value='/template/products/${product.image}'/>);">
                         </a>
                         <div class="text text-center pt-4">
                             <h3><a href="javascript:void(0)">${product.name}</a></h3>
