@@ -35,6 +35,61 @@
                         });
                     </c:forEach>
                 });
+
+                function ChangeCategory(categoryId) {
+                    document.getElementById("loader-product").style.display = "block";
+                    fetch(`/api/products/by-category/${categoryId}`)
+                        .then(response => response.json())
+                        .then(products => {
+                            let html = '<div class="row">';
+                            products.forEach(product => {
+                                html += `
+                <div class="col-md-3">
+                    <div class="menu-entry">
+                        <a class="img"
+                            style="width: 255px; height: 255px; object-fit: cover; background-image: url('/template/products/${product.image}');">
+                        </a>
+                        <div class="text text-center pt-4">
+                            <h3><a href="javascript:void(0)">${product.name}</a></h3>
+                            <p class="price"><span>${product.price.toLocaleString()} VNĐ</span></p>
+                            <p>
+                                <a onclick="addToCart(${product.id})"
+                                    href="javascript:void(0)"
+                                    id="chon_product_${product.id}"
+                                    class="btn btn-primary btn-outline-primary">
+                                    Thêm vào giỏ hàng
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>`;
+                            });
+                            html += '</div>';
+                            document.getElementById("product-container").innerHTML = html;
+                            document.getElementById("loader-product").style.display = "none";
+                        });
+                }
+
+
+                document.addEventListener("DOMContentLoaded", function() {
+                    document.getElementById("loader-product").style.display = "none";
+                })
+
+                function addToCart(productId) {
+                    fetch('/cart/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: 'productId=' + productId
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert(data.message);
+                            // Có thể cập nhật icon giỏ hàng ở đây nếu muốn
+                        });
+                }
+
             </script>
 
             <div class="col-md-12 ftco-animate d-flex justify-content-center mb-5">
@@ -76,9 +131,14 @@
                                 </span>
                             </p>
                             <p>
-                                <a href="javascript:void(0)"
-                                   id="chon_product_${product.id}"
-                                   class="btn btn-primary btn-outline-primary">Thêm vào giỏ hàng</a>
+                                <a
+                                    onclick="addToCart(${product.id})"
+                                    href="javascript:void(0)"
+                                    id="chon_product_${product.id}"
+                                    class="btn btn-primary btn-outline-primary">
+                                    Thêm vào giỏ hàng
+                                </a>
+
                             </p>
                         </div>
                     </div>

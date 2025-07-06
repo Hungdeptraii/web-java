@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ include file="includes/header.jsp" %>
 
 <section class="ftco-section ftco-cart">
@@ -18,7 +20,7 @@
               </tr>
             </thead>
             <tbody>
-              <c:forEach var="item" items="${cart.items}">
+              <c:forEach var="item" items="${cart.itemList}">
                 <tr class="text-center">
                   <td class="product-remove">
                     <a href="#"><span class="icon-close"></span></a>

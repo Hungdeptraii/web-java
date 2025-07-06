@@ -67,7 +67,7 @@
         </li>
 
         <li class="nav-item cart ${activePage == 'cart' ? 'active' : ''}">
-          <a href="#" class="nav-link">
+          <a href="${pageContext.request.contextPath}/cart" class="nav-link">
             <span style="font-size: 1.5rem;" class="icon icon-shopping_cart"></span>
             <span class="bag d-flex justify-content-center align-items-center">
               <small id="totalQuantity">${cart.totalQuantity}</small>
