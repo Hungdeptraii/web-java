@@ -3,6 +3,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ include file="includes/header.jsp" %>
 
+<section class="ftco-menu pb-5 mt-5">
+  <div class="col-lg-12">
+    <div class="row justify-content-center">
+      <div class="col-md-7 heading-section text-center ftco-animate fadeInUp ftco-animated">
+        <span class="subheading">Giỏ hàng</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="ftco-section ftco-cart">
   <div class="container">
     <div class="row">
