@@ -1,77 +1,38 @@
 package com.nhl.model;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
 @Entity
-@Table(name = "website_info")
-public class WebsiteInfo {
-
+@Table(name = "setting")
+public class WebsiteInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "logo")
-    private String logo;
+    private String name;
+    private String value;
 
-    @Column(name = "mo_ta")
-    private String moTa;
+    @Column(name = "created_at")
+    private Timestamp createdAt;
 
-    @Column(name = "dia_chi")
-    private String diaChi;
-
-    @Column(name = "so_dien_thoai")
-    private String soDienThoai;
-
-    @Column(name = "email")
-    private String email;
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
 
     // Getters & Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getId() {
-        return id;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getValue() { return value; }
+    public void setValue(String value) { this.value = value; }
 
-    public String getLogo() {
-        return logo;
-    }
+    public Timestamp getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
 
-    public void setLogo(String logo) {
-        this.logo = logo;
-    }
-
-    public String getMoTa() {
-        return moTa;
-    }
-
-    public void setMoTa(String moTa) {
-        this.moTa = moTa;
-    }
-
-    public String getDiaChi() {
-        return diaChi;
-    }
-
-    public void setDiaChi(String diaChi) {
-        this.diaChi = diaChi;
-    }
-
-    public String getSoDienThoai() {
-        return soDienThoai;
-    }
-
-    public void setSoDienThoai(String soDienThoai) {
-        this.soDienThoai = soDienThoai;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public Timestamp getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(Timestamp updatedAt) { this.updatedAt = updatedAt; }
 }

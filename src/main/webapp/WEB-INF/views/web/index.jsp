@@ -85,8 +85,8 @@
                     })
                         .then(response => response.json())
                         .then(data => {
-                            alert(data.message);
-                            // Có thể cập nhật icon giỏ hàng ở đây nếu muốn
+                            toastr.success("Thêm vào giỏ hàng thành công", "Thông báo");
+                            $('#totalQuantity').text(data.totalQuantity);
                         });
                 }
 
@@ -138,7 +138,6 @@
                                     class="btn btn-primary btn-outline-primary">
                                     Thêm vào giỏ hàng
                                 </a>
-
                             </p>
                         </div>
                     </div>

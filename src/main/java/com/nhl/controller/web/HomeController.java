@@ -7,6 +7,7 @@ import com.nhl.model.Category;
 import com.nhl.repository.ProductRepository;
 import com.nhl.repository.CategoryRepository;
 import com.nhl.repository.WebsiteInfoRepository;
+import com.nhl.service.WebsiteInfoService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -25,7 +27,7 @@ public class HomeController {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private WebsiteInfoRepository websiteInfoRepository;
+    private WebsiteInfoService websiteInfoService;
 
     @GetMapping("/")
     public String homePage(Model model, HttpServletRequest request) {
@@ -38,8 +40,8 @@ public class HomeController {
         model.addAttribute("categories", categories);
 
         // Thông tin website
-        WebsiteInfo infoWebsite = websiteInfoRepository.findFirstByOrderByIdAsc();
-        model.addAttribute("infoWebsite", infoWebsite);
+        Map<String, String> infoMap = websiteInfoService.getInfoWebsiteMap();
+        model.addAttribute("infoWebsite", infoMap);
 
         // Lấy hoặc tạo giỏ hàng trong session
         Cart cart = (Cart) request.getSession().getAttribute("cart");

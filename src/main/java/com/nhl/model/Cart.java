@@ -7,20 +7,21 @@ public class Cart implements Serializable {
     private Map<Long, CartItem> items = new HashMap<>();
 
     public void add(Product product) {
-        Long productId = product.getId();
-        if (items.containsKey(productId)) {
-            items.get(productId).increaseQuantity();
+        if (product == null) return;
+        Long id = product.getId();
+        if (items.containsKey(id)) {
+            items.get(id).increaseQuantity();
         } else {
-            items.put(productId, new CartItem(product, 1));
+            items.put(id, new CartItem(product, 1));
         }
-    }
-
-    public void remove(Long productId) {
-        items.remove(productId);
     }
 
     public void clear() {
         items.clear();
+    }
+
+    public void remove(Long productId) {
+        items.remove(productId);
     }
 
     public void update(Long productId, int quantity) {
@@ -33,6 +34,12 @@ public class Cart implements Serializable {
         }
     }
 
+    public long getTotalPrice() {
+        return items.values().stream()
+                .mapToLong(i -> (long) i.getProduct().getPrice() * i.getQuantity())
+                .sum();
+    }
+
     public Map<Long, CartItem> getItems() {
         return items;
     }
@@ -43,11 +50,5 @@ public class Cart implements Serializable {
 
     public int getTotalQuantity() {
         return items.values().stream().mapToInt(CartItem::getQuantity).sum();
-    }
-
-    public double getTotalPrice() {
-        return items.values().stream()
-                .mapToDouble(i -> i.getProduct().getPrice() * i.getQuantity())
-                .sum();
     }
 }
