@@ -1,11 +1,12 @@
 package com.nhl.model;
 
 import jakarta.persistence.*;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "products")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "category"})
 public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +16,7 @@ public class Product implements Serializable {
     private String image;
 
     private Integer price;
+
 
     @ManyToOne
     @JoinColumn(name = "category_id") // tên cột FK trong bảng products
@@ -61,4 +63,5 @@ public class Product implements Serializable {
     public void setPrice(Integer price) {
         this.price = price;
     }
+
 }

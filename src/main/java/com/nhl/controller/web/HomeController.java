@@ -61,7 +61,7 @@ public class HomeController {
             model.addAttribute("ban", ban);
         }
 
-        return "web/index"; // trỏ đến: /WEB-INF/views/web/index.jsp
+        return "web/front/index"; // trỏ đến: /WEB-INF/views/web/index.jsp
     }
 
 }

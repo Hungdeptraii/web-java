@@ -4,6 +4,13 @@ import com.nhl.model.Cart;
 import com.nhl.model.CartItem;
 import com.nhl.model.Product;
 import com.nhl.repository.ProductRepository;
+import com.nhl.model.CustomerOrder;
+import com.nhl.model.CustomerOrderItem;
+import com.nhl.repository.CustomerOrderRepository;
+import com.nhl.repository.CustomerOrderItemRepository;
+import com.nhl.dto.CheckoutRequest;
+import com.nhl.dto.CartItemDTO;
+import com.nhl.dto.CustomerInfoDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +24,10 @@ public class CartController {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private CustomerOrderRepository customerOrderRepository;
+    @Autowired
+    private CustomerOrderItemRepository customerOrderItemRepository;
 
     public String renderCartHtml(Cart cart) {
         StringBuilder sb = new StringBuilder();
@@ -89,7 +100,7 @@ public class CartController {
         request.getSession().setAttribute("cart", cart);
 
         result.put("thanhTien", String.format("%,d VNĐ", cart.getTotalPrice()));
-        result.put("totalPrice", String.format("%,d VNĐ", (long)(cart.getTotalPrice() * 1.1))); // 10% VAT
+        result.put("totalPrice", String.format("%,d VNĐ", (long)(cart.getTotalPrice()))); // 10% VAT
         result.put("totalQuantity", cart.getTotalQuantity());
 
         // Nếu muốn cập nhật bảng giỏ hàng qua AJAX:
@@ -113,10 +124,62 @@ public class CartController {
         request.getSession().setAttribute("cart", cart);
 
         result.put("thanhTien", String.format("%,d VNĐ", cart.getTotalPrice()));
-        result.put("totalPrice", String.format("%,d VNĐ", (long)(cart.getTotalPrice() * 1.1)));
+        result.put("totalPrice", String.format("%,d VNĐ", cart.getTotalPrice()));
         result.put("totalQuantity", cart.getTotalQuantity());
         // Nếu muốn cập nhật bảng giỏ hàng qua AJAX:
          result.put("html", renderCartHtml(cart));
+        return result;
+    }
+
+    @PostMapping("/checkout")
+    @ResponseBody
+    public Map<String, Object> checkout(@RequestBody CheckoutRequest request, HttpServletRequest servletRequest) {
+        // Kiểm tra giỏ hàng trong session
+        Cart cart = (Cart) servletRequest.getSession().getAttribute("cart");
+        if (cart == null || cart.getItems() == null || cart.getItems().isEmpty()) {
+            Map<String, Object> result = new HashMap<>();
+            result.put("success", false);
+            result.put("message", "Giỏ hàng đã trống hoặc đã được đặt!");
+            return result;
+        }
+
+        // Lưu vào customer_orders
+        CustomerInfoDTO info = request.getInfo();
+        CustomerOrder order = new CustomerOrder();
+        order.setFullname(info.getFullname());
+        order.setPhone(info.getPhone());
+        order.setAddress(info.getAddress());
+        order.setNote(info.getNote());
+
+        char randomChar = (char) ('A' + (int)(Math.random() * 26));
+        int randomNumber = (int) (Math.random() * 10000);
+        String orderCode = randomChar + String.valueOf(randomNumber);
+        order.setCode(orderCode);
+        order.setBan(info.getBan());
+        customerOrderRepository.save(order);
+
+        // Lưu từng món vào customer_order_items
+        for (CartItemDTO item : request.getItems()) {
+            CustomerOrderItem orderItem = new CustomerOrderItem();
+            orderItem.setOrderId(order.getId());
+            orderItem.setProductId(item.getProductId());
+            orderItem.setQuantity(item.getQuantity());
+            // Lấy giá sản phẩm từ DB thay vì lấy từ client
+            Product product = productRepository.findById(item.getProductId()).orElse(null);
+            if (product != null) {
+                orderItem.setPrice(product.getPrice());
+            } else {
+                orderItem.setPrice(0); // hoặc xử lý lỗi nếu cần
+            }
+            customerOrderItemRepository.save(orderItem);
+        }
+
+        // Xóa giỏ hàng trong session NGAY SAU KHI TẠO ĐƠN
+        servletRequest.getSession().removeAttribute("cart");
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("success", true);
+        result.put("orderCode", order.getCode());
         return result;
     }
 

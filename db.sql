@@ -34,6 +34,70 @@ INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
                                                                         (1, 'Đồ ăn', '2025-05-27 01:50:26', '2025-05-29 10:41:30'),
                                                                         (2, 'Đồ uống', '2025-05-29 10:25:14', '2025-05-29 10:41:31');
 
+-- Dumping structure for table order_doan.customer_orders
+CREATE TABLE IF NOT EXISTS `customer_orders` (
+                                                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    `fullname` varchar(255) NOT NULL,
+    `phone` varchar(255) DEFAULT NULL,
+    `address` varchar(255) DEFAULT NULL,
+    `note` varchar(255) DEFAULT NULL,
+    `code` varchar(255) DEFAULT NULL,
+    `ban` varchar(255) DEFAULT NULL,
+    `status` int(11) DEFAULT 0,
+    `reason` varchar(255) DEFAULT NULL,
+    `created_at` timestamp NULL DEFAULT current_timestamp(),
+    `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table order_doan.customer_orders: ~6 rows (approximately)
+DELETE FROM `customer_orders`;
+INSERT INTO `customer_orders` (`id`, `fullname`, `phone`, `address`, `note`, `code`, `ban`, `status`, `reason`, `created_at`, `updated_at`) VALUES
+                                                                                                                                                (55, 'jhgftjyjy', '098 7675646', 'hethrthy', '', 'K9948', '', 2, 'không nhận', NULL, '2025-07-24 11:21:02'),
+                                                                                                                                                (57, 'jftfherte', '087 5342542', 'gẻggr', '', 'G8830', '', 1, NULL, NULL, '2025-07-24 11:06:58'),
+                                                                                                                                                (58, 'hgdyegfe', '098 7424543', 'ghrtht', '', 'Z1072', '', 2, 'không nhận', NULL, '2025-07-24 10:34:56'),
+                                                                                                                                                (60, 'hfghgf', '098 7854636', 'fdgfdg', '', 'Y7096', '', 2, 'không liên lạc được', NULL, '2025-07-24 10:41:58'),
+                                                                                                                                                (61, 'grgergr', '087 5425446', 'ghthrt', '', 'L1729', '', 1, NULL, NULL, '2025-07-24 10:56:27'),
+                                                                                                                                                (62, 'gfjhjhgj', '087 6645676', 'hrthth', '', 'X2641', '', 0, NULL, NULL, NULL);
+
+-- Dumping structure for table order_doan.customer_order_items
+CREATE TABLE IF NOT EXISTS `customer_order_items` (
+                                                      `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    `order_id` bigint(20) unsigned NOT NULL,
+    `product_id` bigint(20) NOT NULL,
+    `quantity` int(11) NOT NULL,
+    `price` int(11) NOT NULL,
+    `created_at` timestamp NULL DEFAULT current_timestamp(),
+    `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+    PRIMARY KEY (`id`),
+    KEY `fk_order_id` (`order_id`),
+    KEY `fk_product_id` (`product_id`),
+    CONSTRAINT `fk_order_id` FOREIGN KEY (`order_id`) REFERENCES `customer_orders` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
+    ) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table order_doan.customer_order_items: ~19 rows (approximately)
+DELETE FROM `customer_order_items`;
+INSERT INTO `customer_order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
+                                                                                                                         (106, 55, 1, 3, 15000, NULL, NULL),
+                                                                                                                         (107, 55, 2, 4, 100000, NULL, NULL),
+                                                                                                                         (108, 55, 5, 1, 20000, NULL, NULL),
+                                                                                                                         (110, 57, 2, 3, 100000, NULL, NULL),
+                                                                                                                         (111, 57, 4, 1, 3000000, NULL, NULL),
+                                                                                                                         (112, 58, 7, 1, 17000, NULL, NULL),
+                                                                                                                         (113, 58, 8, 1, 17000, NULL, NULL),
+                                                                                                                         (114, 58, 9, 1, 17000, NULL, NULL),
+                                                                                                                         (118, 60, 6, 1, 3000, NULL, NULL),
+                                                                                                                         (119, 60, 7, 1, 17000, NULL, NULL),
+                                                                                                                         (120, 60, 8, 1, 17000, NULL, NULL),
+                                                                                                                         (121, 61, 4, 1, 3000000, NULL, NULL),
+                                                                                                                         (122, 61, 5, 1, 20000, NULL, NULL),
+                                                                                                                         (123, 62, 4, 1, 3000000, NULL, NULL),
+                                                                                                                         (124, 62, 5, 1, 20000, NULL, NULL),
+                                                                                                                         (125, 62, 7, 1, 17000, NULL, NULL),
+                                                                                                                         (126, 62, 8, 1, 17000, NULL, NULL),
+                                                                                                                         (127, 62, 9, 1, 17000, NULL, NULL);
+
 -- Dumping structure for table order_doan.logs
 CREATE TABLE IF NOT EXISTS `logs` (
                                       `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -111,24 +175,22 @@ CREATE TABLE IF NOT EXISTS `products` (
     `sale` int(11) unsigned DEFAULT NULL,
     `created_at` timestamp NULL DEFAULT current_timestamp(),
     `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
-    `age` int(11) NOT NULL,
     PRIMARY KEY (`id`),
     KEY `FKog2rp4qthbtt2lfyhfo32lsw9` (`category_id`),
     CONSTRAINT `FKog2rp4qthbtt2lfyhfo32lsw9` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+    ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table order_doan.products: ~9 rows (approximately)
+-- Dumping data for table order_doan.products: ~8 rows (approximately)
 DELETE FROM `products`;
-INSERT INTO `products` (`id`, `category_id`, `name`, `image`, `price`, `sale`, `created_at`, `updated_at`, `age`) VALUES
-                                                                                                                      (1, 1, 'Bánh burger loại 1', 'burger-1.jpg', 15000, NULL, '2025-05-27 01:20:04', '2025-05-29 10:42:03', 0),
-                                                                                                                      (2, 1, 'Bánh burger loại 2', 'burger-2.jpg', 10000, NULL, '2025-05-27 01:22:29', '2025-05-29 10:42:04', 0),
-                                                                                                                      (3, 1, 'Bánh burger loại 3', 'burger-3.jpg', 2000, NULL, '2025-05-27 01:23:23', '2025-05-29 10:42:05', 0),
-                                                                                                                      (4, 2, 'Nước cam', 'drink-1.jpg', 10000, NULL, '2025-05-27 01:23:23', '2025-05-29 10:42:08', 0),
-                                                                                                                      (5, 1, 'Bánh creap', 'dessert-2.jpg', 20000, NULL, '2025-05-27 01:26:33', '2025-05-29 10:42:06', 0),
-                                                                                                                      (6, 1, 'Bánh kem', 'dessert-3.jpg', 3000, NULL, '2025-05-27 01:27:04', '2025-05-29 10:42:07', 0),
-                                                                                                                      (7, 2, 'Bia', 'drink-2.jpg', 17000, NULL, '2025-05-27 01:27:23', '2025-05-29 10:42:10', 0),
-                                                                                                                      (8, 2, 'Nước chanh bạc hà', 'drink-3.jpg', 17000, NULL, '2025-05-27 01:27:23', '2025-05-29 10:42:10', 0),
-                                                                                                                      (9, 2, 'Trà hibiscus', 'drink-4.jpg', 17000, NULL, '2025-05-27 01:27:23', '2025-05-29 10:42:11', 0);
+INSERT INTO `products` (`id`, `category_id`, `name`, `image`, `price`, `sale`, `created_at`, `updated_at`) VALUES
+                                                                                                               (1, 1, 'Bánh burger loại 4', 'f79380cb-71e1-473f-93e9-e8f3d5a02840_burger-3.jpg', 15000, NULL, '2025-05-27 01:20:04', '2025-07-22 17:24:13'),
+                                                                                                               (2, 1, 'Bánh burger loại 2', 'fa51ec15-7ed3-4611-963a-d877fd05edfb_burger-2.jpg', 100000, NULL, '2025-05-27 01:22:29', '2025-07-22 17:37:27'),
+                                                                                                               (4, 2, 'Nước cam', 'drink-4.jpg', 3000000, NULL, '2025-05-27 01:23:23', '2025-07-12 16:33:07'),
+                                                                                                               (5, 1, 'Bánh creap', 'dessert-2.jpg', 20000, NULL, '2025-05-27 01:26:33', '2025-05-29 10:42:06'),
+                                                                                                               (6, 1, 'Bánh kem', 'dessert-3.jpg', 3000, NULL, '2025-05-27 01:27:04', '2025-05-29 10:42:07'),
+                                                                                                               (7, 2, 'Bia hơi', 'drink-2.jpg', 17000, NULL, '2025-05-27 01:27:23', '2025-07-12 15:54:16'),
+                                                                                                               (8, 2, 'Nước chanh bạc hà', 'drink-4.jpg', 17000, NULL, '2025-05-27 01:27:23', '2025-07-12 16:33:05'),
+                                                                                                               (9, 2, 'Trà hibiscus', 'drink-4.jpg', 17000, NULL, '2025-05-27 01:27:23', '2025-05-29 10:42:11');
 
 -- Dumping structure for table order_doan.sessions
 CREATE TABLE IF NOT EXISTS `sessions` (
@@ -151,9 +213,9 @@ DELETE FROM `sessions`;
 
 -- Dumping structure for table order_doan.setting
 CREATE TABLE IF NOT EXISTS `setting` (
-                                         `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-    `name` text NOT NULL,
-    `value` text NOT NULL,
+                                         `id` bigint(20) NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) DEFAULT NULL,
+    `value` varchar(255) DEFAULT NULL,
     `created_at` timestamp NULL DEFAULT current_timestamp(),
     `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
     PRIMARY KEY (`id`)
@@ -198,13 +260,13 @@ CREATE TABLE IF NOT EXISTS `users` (
     `level` int(11) DEFAULT 1,
     `google_id` text DEFAULT NULL,
     `facebook_id` text DEFAULT NULL,
-    `email` text NOT NULL,
+    `email` varchar(255) DEFAULT NULL,
     `phone` text NOT NULL,
-    `fullname` text NOT NULL,
-    `password` text NOT NULL,
-    `avatar` text DEFAULT NULL,
+    `fullname` varchar(255) DEFAULT NULL,
+    `password` varchar(255) DEFAULT NULL,
+    `avatar` varchar(255) DEFAULT NULL,
     `code` text DEFAULT NULL,
-    `remember_token` text DEFAULT NULL,
+    `remember_token` varchar(255) DEFAULT NULL,
     `email_verified_at` timestamp NULL DEFAULT NULL,
     `is_online` tinyint(1) DEFAULT 0,
     `last_seen` timestamp NULL DEFAULT NULL,
@@ -248,7 +310,7 @@ CREATE TABLE IF NOT EXISTS `website_info` (
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table order_doan.website_info: ~0 rows (approximately)
+-- Dumping data for table order_doan.website_info: ~1 rows (approximately)
 DELETE FROM `website_info`;
 INSERT INTO `website_info` (`id`, `logo`, `dia_chi`, `email`, `mo_ta`, `so_dien_thoai`) VALUES
     (1, 'logo1024.png', '123', 'doan@gmail.com', 'ngon - bổ - rẻ', '0987654321');

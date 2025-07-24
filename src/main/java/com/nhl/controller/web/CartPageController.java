@@ -35,6 +35,6 @@ public class CartPageController {
         model.addAttribute("pageTitle", "Giỏ hàng");
         model.addAttribute("activePage", "cart");
 
-        return "web/cart"; // trỏ đến /WEB-INF/views/web/cart.jsp
+        return "web/front/cart"; // trỏ đến /WEB-INF/views/web/cart.jsp
     }
 }
