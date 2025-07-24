@@ -38,29 +38,25 @@
 
                 function ChangeCategory(categoryId) {
                     document.getElementById("loader-product").style.display = "block";
-                    fetch(`/api/products/by-category/${categoryId}`)
-                        .then(response => {
-                            if (!response.ok) throw new Error('Network response was not ok');
-                            return response.json();
-                        })
+                    fetch(`/api/products/by-category/$${'{categoryId}'}`)
+                        .then(response => response.json())
                         .then(products => {
-                            console.log('Kết quả API search trả về:', products);
-                            if (!Array.isArray(products)) products = [];
+                            let arr = Array.isArray(products) ? products : Object.values(products);
                             let html = '<div class="row">';
-                            products.forEach(product => {
+                            arr.forEach(sanpham => {
                                 html += `
                 <div class="col-md-3">
                     <div class="menu-entry">
                         <a class="img"
-                            style="width: 255px; height: 255px; object-fit: cover; background-image: url('/template/products/' + product.image);">
+                            style="width: 255px; height: 255px; object-fit: cover; background-image: url('/template/products/$${'{sanpham.image}'}">
                         </a>
                         <div class="text text-center pt-4">
-                            <h3><a href="javascript:void(0)">${product.name}</a></h3>
-                            <p class="price"><span>${product.price.toLocaleString()} VNĐ</span></p>
+                            <h3><a href="javascript:void(0)">$${'{sanpham.name}'}</a></h3>
+                            <p class="price"><span>$${'{sanpham.price ? sanpham.price.toLocaleString() : ""}'} VNĐ</span></p>
                             <p>
-                                <a onclick="addToCart(${product.id})"
+                                <a onclick="addToCart($${'{sanpham.id}'})"
                                     href="javascript:void(0)"
-                                    id="chon_product_${product.id}"
+                                    id="chon_product_$${'{sanpham.id}'}"
                                     class="btn btn-primary btn-outline-primary">
                                     Thêm vào giỏ hàng
                                 </a>
@@ -71,11 +67,10 @@
                             });
                             html += '</div>';
                             document.getElementById("product-container").innerHTML = html;
-                            document.getElementById("loader-product").style.display = "none";
-                        })
-                        .catch(error => {
-                            document.getElementById("product-container").innerHTML = "<p>Không có sản phẩm nào.</p>";
-                            document.getElementById("loader-product").style.display = "none";
+                            document.querySelectorAll(".nav-link").forEach(link => {
+                                link.classList.remove("active");
+                            });
+                            document.getElementById('nav_' + categoryId).classList.add("active");
                         });
                 }
 
@@ -122,21 +117,22 @@
                     fetch('/api/products/search?keyword=' + encodeURIComponent(keyword))
                         .then(response => response.json())
                         .then(products => {
+                            let arr = Array.isArray(products) ? products : Object.values(products);
                             let html = '<div class="row">';
-                            products.forEach(product => {
+                            arr.forEach(sanpham => {
                                 html += `
                 <div class="col-md-3">
                     <div class="menu-entry">
                         <a class="img"
-                            style="width: 255px; height: 255px; object-fit: cover; background-image: url('/template/products/' + product.image);">
+                            style="width: 255px; height: 255px; object-fit: cover; background-image: url('/template/products/$${'{sanpham.image}'}">
                         </a>
                         <div class="text text-center pt-4">
-                            <h3><a href="javascript:void(0)">${product.name}</a></h3>
-                            <p class="price"><span>${product.price.toLocaleString()} VNĐ</span></p>
+                            <h3><a href="javascript:void(0)">$${'{sanpham.name}'}</a></h3>
+                            <p class="price"><span>$${'{sanpham.price ? sanpham.price.toLocaleString() : ""}'} VNĐ</span></p>
                             <p>
-                                <a onclick="addToCart(${product.id})"
+                                <a onclick="addToCart($${'{sanpham.id}'})"
                                     href="javascript:void(0)"
-                                    id="chon_product_${product.id}"
+                                    id="chon_product_$${'{sanpham.id}'}"
                                     class="btn btn-primary btn-outline-primary">
                                     Thêm vào giỏ hàng
                                 </a>
@@ -147,7 +143,6 @@
                             });
                             html += '</div>';
                             document.getElementById("product-container").innerHTML = html;
-                            document.getElementById("loader-product").style.display = "none";
                         });
                 }
             </script>
