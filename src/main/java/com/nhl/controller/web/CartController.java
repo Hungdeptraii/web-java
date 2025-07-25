@@ -1,22 +1,30 @@
 package com.nhl.controller.web;
 
-import com.nhl.model.Cart;
-import com.nhl.model.CartItem;
-import com.nhl.model.Product;
-import com.nhl.repository.ProductRepository;
-import com.nhl.model.CustomerOrder;
-import com.nhl.model.CustomerOrderItem;
-import com.nhl.repository.CustomerOrderRepository;
-import com.nhl.repository.CustomerOrderItemRepository;
-import com.nhl.dto.CheckoutRequest;
-import com.nhl.dto.CartItemDTO;
-import com.nhl.dto.CustomerInfoDTO;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.nhl.dto.CartItemDTO;
+import com.nhl.dto.CheckoutRequest;
+import com.nhl.dto.CustomerInfoDTO;
+import com.nhl.model.Cart;
+import com.nhl.model.CartItem;
+import com.nhl.model.CustomerOrder;
+import com.nhl.model.CustomerOrderItem;
+import com.nhl.model.Product;
+import com.nhl.repository.CustomerOrderItemRepository;
+import com.nhl.repository.CustomerOrderRepository;
+import com.nhl.repository.ProductRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/cart")
@@ -66,6 +74,14 @@ public class CartController {
     @PostMapping("/add")
     public Map<String, Object> addToCart(@RequestParam("productId") Long productId, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
+
+        // Kiểm tra đăng nhập
+        Object user = request.getSession().getAttribute("user");
+        if (user == null) {
+            result.put("success", false);
+            result.put("message", "Bạn cần đăng nhập để thêm vào giỏ hàng");
+            return result;
+        }
 
         Cart cart = (Cart) request.getSession().getAttribute("cart");
         if (cart == null) {

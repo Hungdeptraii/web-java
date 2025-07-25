@@ -105,19 +105,19 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-3">
-                                                            <label class="form-label">Tên người mua đồ: ${customer_order.fullname}</label>
+                                                            <label class="form-label"><b>Tên người mua đồ:</b> ${customer_order.fullname}</label>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label class="form-label">Số điện thoại: ${customer_order.phone}</label>
+                                                            <label class="form-label"><b>Số điện thoại:</b> ${customer_order.phone}</label>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label class="form-label">Địa chỉ giao hàng: ${customer_order.address}</label>
+                                                            <label class="form-label"><b>Địa chỉ giao hàng:</b> ${customer_order.address}</label>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label class="form-label">Ghi chú: ${customer_order.note}</label>
+                                                            <label class="form-label"><b>Ghi chú:</b> ${customer_order.note}</label>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label class="form-label">Danh sách món đã đặt:</label>
+                                                            <label class="form-label"><b>Danh sách món đã đặt:</b></label>
                                                             <table class="table table-bordered">
                                                                 <thead>
                                                                     <tr>
@@ -148,7 +148,7 @@
                                                             </table>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label class="form-label text-end" style="display:block; width:100%;">Tổng tiền: <span class="text-end"><fmt:formatNumber value="${order_total_map[customer_order.id]}" pattern="#,##0" /> VNĐ</span></label>
+                                                            <label class="form-label text-end" style="display:block; width:100%;"><b>Tổng tiền:</b> <span class="text-end"><fmt:formatNumber value="${order_total_map[customer_order.id]}" pattern="#,##0" /> VNĐ</span></label>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>

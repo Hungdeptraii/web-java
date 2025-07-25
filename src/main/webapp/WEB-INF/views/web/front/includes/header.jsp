@@ -74,6 +74,29 @@
             </span>
           </a>
         </li>
+        <!-- User Icon with dropdown info -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display: flex; align-items: center;">
+            <span class="icon icon-user" style="font-size: 1.5rem;"></span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown" style="min-width: 220px;">
+            <c:choose>
+              <c:when test="${not empty sessionScope.user}">
+                <div class="dropdown-item text-center">
+                  <strong>${sessionScope.user.fullname}</strong><br/>
+                  <small>${sessionScope.user.email}</small>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-center" href="${pageContext.request.contextPath}/logout?key=${sessionScope.user.rememberToken}">Đăng xuất</a>
+              </c:when>
+              <c:otherwise>
+                <div class="dropdown-item text-center">Bạn chưa đăng nhập</div>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-center" href="${pageContext.request.contextPath}/login">Đăng nhập</a>
+              </c:otherwise>
+            </c:choose>
+          </div>
+        </li>
       </ul>
     </div>
   </div>

@@ -1,6 +1,10 @@
 package com.nhl.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users") // hoặc tên bảng thực tế trong CSDL của bạn
@@ -19,6 +23,10 @@ public class User {
     private String fullname;
 
     private String rememberToken;
+
+    private int level;
+
+    private String phone;
 
     // Constructors
     public User() {
@@ -76,5 +84,19 @@ public class User {
 
     public void setRememberToken(String rememberToken) {
         this.rememberToken = rememberToken;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

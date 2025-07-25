@@ -79,19 +79,26 @@
                 })
 
                 function addToCart(productId) {
-                    fetch('/cart/add', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: 'productId=' + productId
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            toastr.success("Thêm vào giỏ hàng thành công", "Thông báo");
-                            $('#totalQuantity').text(data.totalQuantity);
-                        });
-                }
+    fetch('/cart/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'productId=' + productId
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            toastr.success(data.message || "Thêm vào giỏ hàng thành công", "Thông báo");
+            $('#totalQuantity').text(data.totalQuantity);
+        } else {
+            toastr.error(data.message || "Thêm vào giỏ hàng thất bại", "Lỗi");
+            // Optionally chuyển hướng đăng nhập:
+            // window.location.href = "/login";
+        }
+    });
+}
+
 
                 document.addEventListener("DOMContentLoaded", function () {
                     // Sự kiện click nút tìm kiếm
