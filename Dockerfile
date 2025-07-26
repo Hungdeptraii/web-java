@@ -1,11 +1,7 @@
-# 👉 Giai đoạn 1: Build file .war với Maven
-FROM maven:3.9.6-openjdk-17 AS builder
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
+# Dùng JDK 17 để chạy ứng dụng
+FROM eclipse-temurin:17-jdk
 
-# 👉 Giai đoạn 2: Chạy ứng dụng .war bằng JDK
-FROM openjdk:17-jdk-slim
+# Tạo thư mục làm việc trong container
 WORKDIR /app
 COPY --from=builder /app/target/*.war app.war
 EXPOSE 8080
