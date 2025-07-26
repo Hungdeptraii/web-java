@@ -5,7 +5,7 @@ FROM eclipse-temurin:17-jdk
 WORKDIR /app
 
 # Copy file WAR vào container
-COPY target/web-java.war app.war
+COPY target/webtest-0.01-SNAPSHOT.war app.war
 
 # Expose cổng mặc định
 EXPOSE 8080
