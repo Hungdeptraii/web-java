@@ -1,14 +1,12 @@
-# Dùng JDK 17 để chạy ứng dụng
-FROM eclipse-temurin:17-jdk
-
-# Tạo thư mục làm việc trong container
+# 👉 Giai đoạn 1: Build file .war với Maven
+FROM maven:3.9.6-openjdk-17 AS builder
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Copy file WAR vào container
-COPY target/webtest-0.01-SNAPSHOT.war app.war
-
-# Expose cổng mặc định
+# 👉 Giai đoạn 2: Chạy ứng dụng .war bằng JDK
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=builder /app/target/*.war app.war
 EXPOSE 8080
-
-# Chạy WAR như ứng dụng Spring Boot độc lập
 ENTRYPOINT ["java", "-jar", "app.war"]
