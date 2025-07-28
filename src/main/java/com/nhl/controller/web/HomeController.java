@@ -1,21 +1,22 @@
 package com.nhl.controller.web;
 
-import com.nhl.model.Product;
-import com.nhl.model.Cart;
-import com.nhl.model.WebsiteInfo;
-import com.nhl.model.Category;
-import com.nhl.repository.ProductRepository;
-import com.nhl.repository.CategoryRepository;
-import com.nhl.repository.WebsiteInfoRepository;
-import com.nhl.service.WebsiteInfoService;
-import jakarta.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-import java.util.Map;
+import com.nhl.model.Cart;
+import com.nhl.model.Category;
+import com.nhl.model.Product;
+import com.nhl.repository.CategoryRepository;
+import com.nhl.repository.ProductRepository;
+import com.nhl.service.WebsiteInfoService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class HomeController {
@@ -62,6 +63,12 @@ public class HomeController {
         }
 
         return "web/front/index"; // trỏ đến: /WEB-INF/views/web/index.jsp
+    }
+
+    @GetMapping("/simple")
+    @ResponseBody
+    public String simpleHome() {
+        return "<html><body><h1>Welcome to Web Java Application</h1><p>Application is running successfully!</p><p><a href='/login'>Login</a> | <a href='/register'>Register</a></p></body></html>";
     }
 
 }
