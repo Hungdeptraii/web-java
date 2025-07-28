@@ -11,7 +11,7 @@
 	<groupId>com.nhl</groupId>
 	<artifactId>webtest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>webtest</name>
 	<description>webtest</description>
 	<url/>
