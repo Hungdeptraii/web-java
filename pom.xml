@@ -11,7 +11,7 @@
 	<groupId>com.nhl</groupId>
 	<artifactId>webtest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>webtest</name>
 	<description>webtest</description>
 	<url/>
@@ -94,12 +94,10 @@
 	<build>
   <plugins>
     <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-compiler-plugin</artifactId>
-      <version>3.14.0</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-maven-plugin</artifactId>
       <configuration>
-        <source>17</source>
-        <target>17</target>
+        <mainClass>@SpringBootApplication</mainClass>
       </configuration>
     </plugin>
   </plugins>
