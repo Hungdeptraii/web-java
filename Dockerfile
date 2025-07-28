@@ -5,8 +5,7 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # 👉 Giai đoạn 2: Chạy ứng dụng .war bằng JDK
-FROM eclipse-temurin:21-jdk
-
+FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY --from=builder /app/target/*.war app.war
 EXPOSE 8081
