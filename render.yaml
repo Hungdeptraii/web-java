@@ -3,7 +3,7 @@ services:
     name: webtest
     env: java
     buildCommand: mvn clean package
-    startCommand: java -jar target/webtest-0.0.1-SNAPSHOT.war
+    startCommand: java -jar target/webtest-0.0.1-SNAPSHOT.jar
     envVars:
       - key: JAVA_VERSION
         value: 17
