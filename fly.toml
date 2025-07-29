@@ -1,7 +1,4 @@
-# fly.toml app configuration file generated for web-java on 2025-07-29T09:52:23Z
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
+
 
 app = 'web-java'
 primary_region = 'sin'
